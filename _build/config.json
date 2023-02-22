@@ -11,8 +11,10 @@
           "name": "Sentry",
           "file": "sentry.plugin.php",
           "events": [
-            "OnHandleRequest",
-            "OnMODXInit"
+            "OnLoadWebPageCache",
+            "OnMODXInit",
+            "OnWebPageInit",
+            "OnHandleRequest"
           ]
         }
       ]

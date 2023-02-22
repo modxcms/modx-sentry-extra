@@ -19,6 +19,11 @@ class OnMODXInit extends Event
                 'dsn' => $dsn,
                 'traces_sample_rate' => $traces_sample_rate,
             ]);
+            $this->modx->errorHandler = new \SentryExtra\ErrorHandler($this->modx, []);
+            set_error_handler(
+                array($this->modx->errorHandler, 'handleError'),
+                $this->getOption('error_handler_types', error_reporting(), true)
+            );
         }
     }
 }

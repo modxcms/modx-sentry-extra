@@ -23,8 +23,16 @@ class Parser extends \modParser
 
     private function startTransaction()
     {
+        $resource = $this->modx->resource;
+        $resourceId = $resource ? $resource->get('id') : 0;
+        // If no resource is found, we grab the path from the request uri
+        if ($resourceId === 0) {
+            $url = parse_url($_SERVER['REQUEST_URI']);
+            $resourceId = $url['path'] ?? '/';
+        }
+        // Create a transaction context
         $transactionContext = new \Sentry\Tracing\TransactionContext();
-        $transactionContext->setName('modParser');
+        $transactionContext->setName("modParser($resourceId)");
         $transactionContext->setOp('modx.parser');// Start the transaction
         $this->transaction = \Sentry\startTransaction($transactionContext);
 
