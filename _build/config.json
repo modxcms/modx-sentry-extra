@@ -1,0 +1,31 @@
+{
+  "name": "Sentry",
+  "lowCaseName": "sentryextra",
+  "description": "Sentry Integration for MODX",
+  "author": "matdave",
+  "version": "0.0.1-pl",
+  "package": {
+    "elements": {
+      "plugins": [
+        {
+          "name": "Sentry",
+          "file": "sentry.plugin.php",
+          "events": [
+            "OnHandleRequest",
+            "OnMODXInit"
+          ]
+        }
+      ]
+    },
+    "systemSettings": [
+      {
+        "key": "dsn",
+        "value": ""
+      },
+      {
+        "key": "traces_sample_rate",
+        "value": "0.1"
+      }
+    ]
+  }
+}
