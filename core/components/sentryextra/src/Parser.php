@@ -12,27 +12,14 @@ class Parser extends \modParser
      * @var \Sentry $modx
      */
     public $sentry = null;
-    /**
-     * @param \xPDO $modx A reference to the modX|xPDO instance
-     */
-    public function __construct(\xPDO &$modx)
-    {
-        parent::__construct($modx);
-        $this->startTransaction();
-    }
 
-    private function startTransaction()
+    public function startTransaction()
     {
-        $resource = $this->modx->resource;
-        $resourceId = $resource ? $resource->get('id') : 0;
-        // If no resource is found, we grab the path from the request uri
-        if ($resourceId === 0) {
-            $url = parse_url($_SERVER['REQUEST_URI']);
-            $resourceId = $url['path'] ?? '/';
-        }
         // Create a transaction context
         $transactionContext = new \Sentry\Tracing\TransactionContext();
-        $transactionContext->setName("modParser($resourceId)");
+        $transactionContext->setName(
+            'modParser('.$this->modx->resourceMethod.' : '.$this->modx->resourceIdentifier.')'
+        );
         $transactionContext->setOp('modx.parser');// Start the transaction
         $this->transaction = \Sentry\startTransaction($transactionContext);
 
