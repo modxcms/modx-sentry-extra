@@ -3,7 +3,7 @@
   "lowCaseName": "sentryextra",
   "description": "Sentry Integration for MODX",
   "author": "matdave",
-  "version": "0.0.1-pl",
+  "version": "1.0.0-pl",
   "package": {
     "elements": {
       "plugins": [
@@ -26,8 +26,17 @@
         "value": ""
       },
       {
+        "key": "environment",
+        "value": "production"
+      },
+      {
         "key": "traces_sample_rate",
         "value": "0.1"
+      },
+      {
+        "key": "keep_error_log",
+        "type": "combo-boolean",
+        "value": "1"
       }
     ]
   }

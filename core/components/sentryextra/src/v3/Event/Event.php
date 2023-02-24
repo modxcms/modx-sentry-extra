@@ -1,18 +1,20 @@
 <?php
-namespace SentryExtra\Event;
+namespace SentryExtra\v3\Event;
+
+use SentryExtra\v3\SentryExtra;
 
 abstract class Event
 {
-    /** @var \SentryExtra */
+    /** @var SentryExtra */
     protected $sentryExtra;
 
-    /** @var \modX */
+    /** @var \MODX\Revolution\modX */
     protected $modx;
 
     /** @var array */
     protected $sp = [];
 
-    public function __construct(\SentryExtra $sentryExtra, array $scriptProperties)
+    public function __construct(SentryExtra $sentryExtra, array $scriptProperties)
     {
         $this->sentryExtra =& $sentryExtra;
         $this->modx =& $this->sentryExtra->modx;

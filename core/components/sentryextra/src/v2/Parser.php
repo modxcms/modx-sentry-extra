@@ -1,10 +1,14 @@
 <?php
-namespace SentryExtra;
+namespace SentryExtra\v2;
+
+use Sentry\SentrySdk;
+use Sentry\Tracing\Transaction;
+use Sentry\Tracing\TransactionContext;
 
 class Parser extends \modParser
 {
     /**
-     * @var \Sentry\Tracing\Transaction
+     * @var Transaction
      */
     private $transaction = null;
     /**
@@ -16,7 +20,7 @@ class Parser extends \modParser
     public function startTransaction()
     {
         // Create a transaction context
-        $transactionContext = new \Sentry\Tracing\TransactionContext();
+        $transactionContext = new TransactionContext();
         $transactionContext->setName(
             'modParser('.$this->modx->resourceMethod.' : '.$this->modx->resourceIdentifier.')'
         );
@@ -24,15 +28,18 @@ class Parser extends \modParser
         $this->transaction = \Sentry\startTransaction($transactionContext);
 
         // Set the current transaction as the current span, so we can retrieve it later
-        \Sentry\SentrySdk::getCurrentHub()->setSpan($this->transaction);
+        SentrySdk::getCurrentHub()->setSpan($this->transaction);
     }
 
     public function endTransaction()
     {
+        if ($this->transaction === null) {
+            return;
+        }
         // Set the current span back to the transaction since we just finished the previous span
-        \Sentry\SentrySdk::getCurrentHub()->setSpan($this->transaction);
+        SentrySdk::getCurrentHub()->setSpan($this->transaction);
 
-        // Finish the transaction, this submits the transaction and it's span to Sentry
+        // Finish the transaction, this submits the transaction, and it's span to Sentry
         $this->transaction->finish();
     }
     /**
@@ -45,7 +52,7 @@ class Parser extends \modParser
      */
     public function processTag($tag, $processUncacheable = true)
     {
-        $parent = \Sentry\SentrySdk::getCurrentHub()->getSpan();
+        $parent = SentrySdk::getCurrentHub()->getSpan();
         $span = null;
 
         // Check if we have a parent span (this is the case if we started a transaction earlier)
@@ -56,7 +63,7 @@ class Parser extends \modParser
             $span = $parent->startChild($context);
 
             // Set the current span to the span we just started
-            \Sentry\SentrySdk::getCurrentHub()->setSpan($span);
+            SentrySdk::getCurrentHub()->setSpan($span);
         }
         // Process the tag
         $elementOutput = parent::processTag($tag, $processUncacheable);
@@ -65,7 +72,7 @@ class Parser extends \modParser
             $span->finish();
 
             // Restore the current span back to the parent span
-            \Sentry\SentrySdk::getCurrentHub()->setSpan($parent);
+            SentrySdk::getCurrentHub()->setSpan($parent);
         }
         return $elementOutput;
     }

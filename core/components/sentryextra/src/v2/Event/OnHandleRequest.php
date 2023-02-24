@@ -1,6 +1,8 @@
 <?php
 
-namespace SentryExtra\Event;
+namespace SentryExtra\v2\Event;
+
+use SentryExtra\v2\Parser;
 
 class OnHandleRequest extends Event
 {
@@ -8,7 +10,7 @@ class OnHandleRequest extends Event
     {
         $dsn = $this->getOption('sentryextra.dsn');
         if ($dsn) {
-            $this->modx->parser = new \SentryExtra\Parser($this->modx);
+            $this->modx->parser = new Parser($this->modx);
         }
     }
 }

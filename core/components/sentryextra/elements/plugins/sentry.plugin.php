@@ -1,14 +1,31 @@
 <?php
 /**
- * @var modX $modx
+ * @var MODX\Revolution\modX | \modX $modx
  * @var array $scriptProperties
+ *
  */
-$sentry = $modx->getService('sentryextra', 'SentryExtra', $modx->getOption('sentryextra.core_path', null, $modx->getOption('core_path') . 'components/sentryextra/') . 'model/sentryextra/');
-if (!($sentry instanceof \SentryExtra)) return '';
+if (empty($modx->version)) {
+    $modx->getVersionData();
+}
+$version = $modx->version['version'] < 3 ? 'v2' : 'v3';
 
-$class = "\\SentryExtra\\Event\\{$modx->event->name}";
+if ($version === 'v2') {
+    $sentry = $modx->getService(
+        'sentryextra',
+        'SentryExtra',
+        $modx->getOption(
+            'sentryextra.core_path',
+            null,
+            $modx->getOption('core_path') . 'components/sentryextra/'
+        ) . 'model/sentryextra/'
+    );
+} else {
+    $sentry = $modx->services->get('sentryextra');
+}
+
+$class = "\\SentryExtra\\$version\\Event\\{$modx->event->name}";
 if (class_exists($class)) {
-    /** @var \SentryExtra\Event\Event $event */
+    /** @var \SentryExtra\v2\Event\Event | \SentryExtra\v3\Event\Event  $event */
     $event = new $class($sentry, $scriptProperties);
     $event->run();
 }

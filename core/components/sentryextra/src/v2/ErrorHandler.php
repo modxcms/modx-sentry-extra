@@ -1,5 +1,7 @@
 <?php
-namespace SentryExtra;
+namespace SentryExtra\v2;
+
+use function Sentry\captureException;
 
 class ErrorHandler extends \modErrorHandler
 {
@@ -20,6 +22,7 @@ class ErrorHandler extends \modErrorHandler
         if (error_reporting() == 0) {
             return;
         }
+        $handled = true;
         switch ($errno) {
             case E_USER_ERROR:
                 $errmsg= 'User error: ' . $errstr;
@@ -49,10 +52,14 @@ class ErrorHandler extends \modErrorHandler
                 $errmsg= 'User deprecated: ' . $errstr;
                 break;
             default:
+                $handled = false;
                 $errmsg= 'Un-recoverable error ' . $errno . ': '. $errstr;
                 break;
         }
-        \Sentry\captureException(new \ErrorException($errmsg, 0, $errno, $errfile, $errline));
-        return parent::handleError($errno, $errstr, $errfile, $errline, $errcontext);
+        captureException(new \ErrorException($errmsg, 0, $errno, $errfile, $errline));
+        if ($this->modx->getOption('sentryextra.keep_error_log', null, true)) {
+            return parent::handleError($errno, $errstr, $errfile, $errline, $errcontext);
+        }
+        return $handled;
     }
 }

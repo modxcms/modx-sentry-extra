@@ -1,6 +1,6 @@
 <?php
 
-namespace SentryExtra\Event;
+namespace SentryExtra\v2\Event;
 
 class OnWebPageInit extends Event
 {

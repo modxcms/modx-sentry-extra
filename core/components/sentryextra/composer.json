@@ -2,7 +2,7 @@
     "name": "modxcms/modx-sentry-extra",
     "description": "Extra for reporting MODX events to Sentry",
     "require": {
-        "php": "^7.2|^8.0",
+        "php": ">=7.4",
         "sentry/sdk": "^3.3"
     },
     "autoload": {
@@ -15,5 +15,10 @@
             "name": "matdave",
             "email": "mat@matdave.com"
         }
-    ]
+    ],
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    }
 }
