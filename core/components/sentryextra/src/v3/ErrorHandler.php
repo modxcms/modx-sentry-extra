@@ -74,6 +74,7 @@ class ErrorHandler extends modErrorHandler
         $error = error_get_last();
         if ($error && $error['type'] === E_ERROR) {
             $this->handleError($error['type'], $error['message'], $error['file'], $error['line']);
+            die();
         }
     }
 }
