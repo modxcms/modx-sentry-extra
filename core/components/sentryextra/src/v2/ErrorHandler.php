@@ -62,4 +62,17 @@ class ErrorHandler extends \modErrorHandler
         }
         return $handled;
     }
+
+    public function handleException(\Throwable $e)
+    {
+        captureException($e);
+    }
+
+    public function handleShutdown()
+    {
+        $error = error_get_last();
+        if ($error && $error['type'] === E_ERROR) {
+            $this->handleError($error['type'], $error['message'], $error['file'], $error['line']);
+        }
+    }
 }

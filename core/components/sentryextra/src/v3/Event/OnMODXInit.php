@@ -29,6 +29,8 @@ class OnMODXInit extends Event
                 array($this->modx->errorHandler, 'handleError'),
                 $this->getOption('error_handler_types', error_reporting(), true)
             );
+            set_exception_handler(array($this->modx->errorHandler, 'handleException'));
+            register_shutdown_function(array($this->modx->errorHandler, 'handleShutdown'));
         }
     }
 }
