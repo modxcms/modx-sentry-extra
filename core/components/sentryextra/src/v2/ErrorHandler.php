@@ -20,7 +20,12 @@ class ErrorHandler extends \modErrorHandler
     public function handleError($errno, $errstr, $errfile = null, $errline = null, $errcontext = null)
     {
         if (error_reporting() == 0) {
-            return;
+            return false;
+        }
+        // If the error reporting level is not included in the current error_reporting
+        // level, then ignore the error.
+        if (!(error_reporting() & $errno)) {
+            return false;
         }
         $handled = true;
         switch ($errno) {
