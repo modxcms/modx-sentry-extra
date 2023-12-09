@@ -57,7 +57,7 @@ class SentryExtra
         return $option;
     }
 
-    public function log($level, $msg, $file = '', $line = ''): void
+    public function log($level, $msg, $file = '', $line = 0): void
     {
         captureException(new \ErrorException($msg, 0, $level, $file, $line));
     }
