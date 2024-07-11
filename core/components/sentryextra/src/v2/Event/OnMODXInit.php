@@ -18,6 +18,10 @@ class OnMODXInit extends Event
         if ($traces_sample_rate < 0) {
             $traces_sample_rate = 0;
         }
+        $errorsOnly = ( (int) $this->getOption('sentryextra.errors_only', 1) === 1);
+        if ($errorsOnly) {
+            error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
+        }
         if ($dsn) {
             init([
                 'dsn' => $dsn,
