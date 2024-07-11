@@ -13,7 +13,7 @@ The extra will automatically log all errors to Sentry. You can also log messages
 
 ### MODX 2.x
 ```php
-$sentry = $modx->getService('sentry', 'SentryExtra', $modx->getOption('sentry.core_path', null, $modx->getOption('core_path') . 'components/sentry/') . 'model/sentry/');
+$sentry = $modx->getService('sentryextra', 'SentryExtra', $modx->getOption('sentryextra.core_path', null, $modx->getOption('core_path') . 'components/sentryextra/') . 'model/sentryextra/');
 if ($sentry) $sentry->log(xPDO::LOG_LEVEL_ERROR, 'This is a test error message');
 ```
 

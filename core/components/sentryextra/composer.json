@@ -3,7 +3,7 @@
     "description": "Extra for reporting MODX events to Sentry",
     "require": {
         "php": ">=7.4",
-        "sentry/sdk": "^3.3"
+        "sentry/sentry": "^4.8"
     },
     "autoload": {
         "psr-4": {
@@ -19,6 +19,12 @@
     "config": {
         "platform": {
             "php": "7.4"
+        },
+        "allow-plugins": {
+            "php-http/discovery": true
         }
+    },
+    "require-dev": {
+        "modx/revolution": "^3.0"
     }
 }

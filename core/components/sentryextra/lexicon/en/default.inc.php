@@ -10,3 +10,5 @@ $_lang['setting_sentryextra.traces_sample_rate'] = 'Sentry Traces Sample Rate';
 $_lang['setting_sentryextra.traces_sample_rate_desc'] = 'The percentage chance of transactions being sent to Sentry. (So, for example, if you set traces_sample_rate to 0.2, approximately 20% of your transactions will get recorded and sent.)';
 $_lang['setting_sentryextra.keep_error_log'] = 'Keep Error Log';
 $_lang['setting_sentryextra.keep_error_log_desc'] = 'Keep PHP errors in the log or only send to Sentry. Standard $modx->log() events will still be recorded.';
+$_lang['setting_sentryextra.errors_only'] = 'Ignore Notices and Warnings';
+$_lang['setting_sentryextra.errors_only_desc'] = 'Only log PHP errors, not warnings or deprecation notices.';
