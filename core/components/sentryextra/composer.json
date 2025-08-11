@@ -3,7 +3,7 @@
     "description": "Extra for reporting MODX events to Sentry",
     "require": {
         "php": ">=7.4",
-        "sentry/sentry": "^4.8"
+        "sentry/sentry": "^4.14"
     },
     "autoload": {
         "psr-4": {
