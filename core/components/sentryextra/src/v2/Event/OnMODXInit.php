@@ -18,6 +18,9 @@ class OnMODXInit extends Event
         if ($traces_sample_rate < 0) {
             $traces_sample_rate = 0;
         }
+        if (!empty($_REQUEST['debug']) && !empty($this->modx->user) && $this->modx->user->hasSessionContext('mgr')) {
+            $traces_sample_rate = 1;
+        }
         $errorsOnly = ( (int) $this->getOption('sentryextra.errors_only', 1) === 1);
         if ($errorsOnly) {
             error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
