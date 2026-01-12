@@ -38,6 +38,18 @@ class OnMODXInit extends Event
             );
             set_exception_handler(array($this->modx->errorHandler, 'handleException'));
             register_shutdown_function(array($this->modx->errorHandler, 'handleShutdown'));
+            if (!$this->getOption('sentryextra.keep_error_log', true)) {
+                $logger = [];
+                $target = [
+                    'target' => 'ARRAY_EXTENDED',
+                    'options' => [
+                        'var' => &$logger
+                    ]
+                ];
+                $this->modx->setOption('log_target', $target);
+                $this->modx->config['log_target'] = $target;
+                $this->modx->setLogTarget($target);
+            }
         }
     }
 }

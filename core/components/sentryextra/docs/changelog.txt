@@ -1,3 +1,8 @@
+1.2.0-pl
+====================
+- Add ability to send all logs to Sentry
+- Upgrade Sentry SDK to 4.19.1
+
 1.1.1-pl
 ====================
 - Upgrade Sentry SDK to 4.14.2

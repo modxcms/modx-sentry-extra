@@ -3,7 +3,7 @@
   "lowCaseName": "sentryextra",
   "description": "Sentry Integration for MODX",
   "author": "matdave",
-  "version": "1.1.1-pl",
+  "version": "1.2.0-pl",
   "package": {
     "elements": {
       "plugins": [
